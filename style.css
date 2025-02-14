@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Yatay taşmaları önleme */
+    overflow-x: hidden;
 }
 
 h1 {
@@ -15,20 +15,18 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Oyun alanı: Rod'lar her zaman yan yana kalacak */
 .game-container {
     display: flex;
     justify-content: center;
     gap: 30px;
     margin-top: 20px;
-    flex-wrap: nowrap; /* Her zaman yan yana */
-    overflow-x: auto; /* Küçük ekranlarda yatay kaydırma */
+    flex-wrap: nowrap;
+    overflow-x: auto;
     padding: 10px;
 }
 
-/* Çubuklar */
 .rod {
-    width: 20vw; /* Ekran genişliğine göre ayarlandı */
+    width: 20vw;
     max-width: 150px;
     height: 50vh;
     max-height: 400px;
@@ -38,11 +36,9 @@ h1 {
     flex-direction: column-reverse;
     align-items: center;
     padding-top: 20px;
-    z-index: 1;
     border-radius: 3%;
 }
 
-/* Çubuk içindeki direk */
 .rod::before {
     content: '';
     position: absolute;
@@ -52,10 +48,8 @@ h1 {
     height: 70%;
     background: #555;
     transform: translateX(-50%);
-    z-index: 2;
 }
 
-/* Diskler */
 .disk {
     height: 30px;
     text-align: center;
@@ -64,28 +58,26 @@ h1 {
     margin-bottom: 5px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    position: relative;
-    z-index: 3;
     border-radius: 25%;
+    position: relative;
+    z-index: 2; /* Diskleri çubukların önüne getirir */
 }
 
-/* Responsive genişlikler */
 .disk.w1 { width: 30%; min-width: 50px; background: red; }
 .disk.w2 { width: 45%; min-width: 70px; background: blue; }
 .disk.w3 { width: 60%; min-width: 90px; background: green; }
 .disk.w4 { width: 75%; min-width: 110px; background: orange; }
+.disk.w5 { width: 90%; min-width: 130px; background: purple; }
 
-/* Seçilen diskin efekti */
 .disk.selected {
     transform: scale(1.2) translateY(-10px);
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Küçük ekranlar için düzen */
 @media (max-width: 768px) {
     .game-container {
-        justify-content: flex-start; /* Küçük ekranlarda kaydırma ile görünür olacak */
-        overflow-x: auto; /* Yatay kaydırma */
+        justify-content: flex-start;
+        overflow-x: auto;
         padding-bottom: 10px;
     }
 
@@ -95,7 +87,7 @@ h1 {
         height: 40vh;
         max-height: 300px;
     }
-    
+
     .disk {
         height: 25px;
         line-height: 25px;

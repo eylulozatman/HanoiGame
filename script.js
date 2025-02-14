@@ -1,13 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-    document.querySelectorAll(".disk").forEach(disk => {
-        disk.textContent = `${disk.dataset.weight}`;
-    });
-    let rods = document.querySelectorAll('.rod');
+    const rods = document.querySelectorAll('.rod');
+    const moveCounterDisplay = document.getElementById('move-counter');
+    const diskSelect = document.getElementById('disk-select');
     let selectedDisk = null;
     let moveCount = 0;
+    let diskCount = 4;
 
-    const moveCounterDisplay = document.getElementById('move-counter');
+    function initializeGame() {
+        moveCount = 0;
+        moveCounterDisplay.textContent = `Hamle Sayısı: ${moveCount}`;
+        rods.forEach(rod => rod.innerHTML = '');
+        
+        diskCount = parseInt(diskSelect.value);
+        let rod1 = document.getElementById('rod1');
+
+        for (let i = diskCount; i >= 1; i--) {
+            let disk = document.createElement('div');
+            disk.classList.add('disk', `w${i}`);
+            disk.dataset.weight = i;
+            disk.textContent = i;
+            rod1.appendChild(disk);
+        }
+    }
 
     function getTopDisk(rod) {
         return rod.querySelector('.disk:last-child');
@@ -40,17 +54,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-    
+
     function checkWin() {
         let lastRod = document.getElementById('rod3');
-        if (lastRod.children.length === 4) {
+        if (lastRod.children.length === diskCount) {
+            let optimalMoves = Math.pow(2, diskCount) - 1;
             let message;
-            if (moveCount === 15) {
-                message = "Mükemmel! Optimal çözümde tamamladın! 🎯";
+            if (moveCount === optimalMoves) {
+                message = `Mükemmel! Optimal çözümde tamamladın! 🎯 (${optimalMoves} hamle)`;
                 startConfetti();
-            } else if (moveCount <= 20) {
+            } else if (moveCount <= optimalMoves + 5) {
                 message = "Güzel iş! Ama biraz daha hızlı olabilirsin! 🔥";
-            } else if (moveCount <= 30) {
+            } else if (moveCount <= optimalMoves + 15) {
                 message = "Fena değil ama geliştirmeye açık! 😏";
             } else {
                 message = "Bu kadar sürede mi bitirdin? Tekrar dene! 😂";
@@ -60,60 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startConfetti() {
-        confetti({
-            particleCount: 200,
-            spread: 100
-        });
+        confetti({ particleCount: 200, spread: 100 });
     }
+
+    diskSelect.addEventListener("change", initializeGame);
+    initializeGame();
 });
-
-
-function startConfetti() {
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let particles = [];
-
-    for (let i = 0; i < 100; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            r: Math.random() * 4 + 1,
-            d: Math.random() * 4
-        });
-    }
-
-    function drawConfetti() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(255, 0, 0, 0.8)";
-        ctx.beginPath();
-        for (let i = 0; i < particles.length; i++) {
-            let p = particles[i];
-            ctx.moveTo(p.x, p.y);
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, false);
-        }
-        ctx.fill();
-        updateConfetti();
-    }
-
-    function updateConfetti() {
-        for (let i = 0; i < particles.length; i++) {
-            let p = particles[i];
-            p.y += p.d;
-            if (p.y > canvas.height) {
-                p.y = 0;
-                p.x = Math.random() * canvas.width;
-            }
-        }
-    }
-
-    function animateConfetti() {
-        drawConfetti();
-        requestAnimationFrame(animateConfetti);
-    }
-
-    animateConfetti();
-}
