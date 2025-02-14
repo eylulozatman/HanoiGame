@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
+    
     function checkWin() {
         let lastRod = document.getElementById('rod3');
         if (lastRod.children.length === 4) {
