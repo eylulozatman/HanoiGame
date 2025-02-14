@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".disk").forEach(disk => {
+        disk.textContent = `${disk.dataset.weight}`;
+    });
     let rods = document.querySelectorAll('.rod');
     let selectedDisk = null;
     let moveCount = 0;
