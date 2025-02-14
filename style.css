@@ -1,0 +1,57 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+h1 { margin-bottom: 10px; }
+#move-counter { font-size: 18px; margin-bottom: 20px; }
+.game-container { display: flex; justify-content: center; gap: 30px; margin-top: 20px; }
+.rod {
+    width: 150px;
+    height: 400px;
+    background: #d6dce9;
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding-top: 20px;
+    border-radius: 3%;
+}
+.rod::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    height: 250px;
+    background: #555;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+.disk {
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+    z-index: 3;
+    border-radius: 25%;
+}
+.disk:active { transform: scale(1.1); }
+.disk.w1 { width: 60px; background: red; }
+.disk.w2 { width: 90px; background: blue; }
+.disk.w3 { width: 120px; background: green; }
+.disk.w4 { width: 150px; background: orange; }
+#confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
